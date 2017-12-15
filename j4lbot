@@ -1,0 +1,52 @@
+import discord
+from discord.ext.commands import Bot
+from discord.ext import commands
+import asyncio
+import time
+
+Client = discord.Client()
+client = commands.Bot (command_prefix = "!")
+
+
+@client.event
+async def on_ready():
+    print("Bot is ready!")
+
+@client.event
+async def on_message(message):
+    if message.content.upper().startswith('!EN'):
+                    await client.delete_message(message)
+                    args = message.content.split(" ")
+                    await client.send_message(message.channel, "Please speak english %s" % (" ".join(args[1:])))
+    if message.content.upper().startswith('!HELLO'):
+        if ("390137450216816640" in [role.id for role in message.author.roles]) or  ("390148191011602433" in [role.id for role in message.author.roles]):
+            await client.delete_message(message)
+            args = message.content.split(" ")
+            await client.send_message(message.channel, "Welcome %s" % (" ".join(args[1:])))
+        else:
+            userID = message.author.name
+            await client.delete_message(message)
+            await client.send_message(message.channel, ":x: You do not have permission for !HELLO command!, **%s**" % (userID))
+    if message.content.upper().startswith('!SAY'):
+        if message.author.id == "319870998369533952":
+            args = message.content.split(" ")
+            await client.delete_message(message)
+            await client.send_message(message.channel, "%s" % (" ".join(args[1:])))
+        else:
+            userID = message.author.name
+            await client.delete_message(message)
+            await client.send_message(message.channel, ":x: You do not have permission for !SAY command!, **%s**" % (userID))
+    if message.content.upper().startswith('!ADMIN'):
+        if ("390137450216816640" in [role.id for role in message.author.roles]) or  ("390148191011602433" in [role.id for role in message.author.roles]) or ("378218908831711243" in [role.id for role in message.author.roles]):
+            userID = message.author.name
+            await client.send_message(message.channel, ":white_check_mark: You are an admin, **%s**" % (userID))
+        else:
+            userID = message.author.name
+            await client.send_message(message.channel, ":x: You are not an admin, **%s**" % (userID))
+    if message.content.upper().startswith("!CMDS"):
+            await client.send_message(message.channel,"The prefix for Jump4Life is !")
+    if message.content.upper().startswith("!CMDS"):
+            await client.send_message(message.channel,"Cmmonds: ```!en, !hello, !say and !admin```")
+        
+
+client.run("MzkwMTg1MjU2NjEyOTIxMzU1.DRGfPQ.371uRap_0Ehl4WDAWuGBHyOi8fc")
